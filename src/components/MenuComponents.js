@@ -6,64 +6,52 @@ class Menu extends Component{
         super(props);
 
         this.state={
-            dishes:[
-                {
-                    id: 0,
-                    name:'Uthappizza',
-                    image: 'assets/images/uthappizza.png',
-                    category: 'mains',
-                    label:'Hot',
-                    price:'4.99',
-                    description:'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.'                        },
-                {
-                    id: 1,
-                    name:'Zucchipakoda',
-                    image: 'assets/images/zucchipakoda.png',
-                    category: 'appetizer',
-                    label:'',
-                    price:'1.99',
-                    description:'Deep fried Zucchini coated with mildly spiced Chickpea flour batter accompanied with a sweet-tangy tamarind sauce'                        },
-                {
-                    id: 2,
-                    name:'Vadonut',
-                    image: 'assets/images/vadonut.png',
-                    category: 'appetizer',
-                    label:'New',
-                    price:'1.99',
-                    description:'A quintessential ConFusion experience, is it a vada or is it a donut?' },
-                {
-                    id: 3,
-                    name:'ElaiCheese Cake',
-                    image: 'assets/images/elaicheesecake.png',
-                    category: 'dessert',
-                    label:'',
-                    price:'2.99',
-                    description:'A delectable, semi-sweet New York Style Cheese Cake, with Graham cracker crust and spiced with Indian cardamoms'                        }
-                  
-            ],
+            SelectedDish:null
         }
     }
+    onDishSelect(dish){
+        this.setState({SelectedDish:dish});
+    }
 
-    render(){
-
+    renderDish(dish) {
+        
+        if (dish != null)
         return(
-             
-            this.state.dishes.map((dish)=>{
-                
+            <div>{dish.description}</div>
+        );
+    else
+        return(
+            <div></div>
+        );
+    }
+    render(){
+            const menu=this.props.dishes.map((dish)=>{
             return(
-             <div key={dish.id} className="ml-5 mt-5">
-            <div className="media">
-            <img className="mr-3" src={dish.image} alt={dish.name} />
-            <div className="media-body">
-              <h5 className="mt-0">{dish.name}</h5>
-              {dish.description}
-            </div>
-            </div>
-            </div>  
+                
+            <div  className="col-12 col-md-5 mt-5"  onClick={()=>this.onDishSelect(dish)}>
+                <div key={dish.id} className="card">
+                    <img  width="100%" className="card-img-top" src={dish.image} alt="Card image cap" />
+                        <div className="card-img-overlay">
+                            <h5 className="card-title">{dish.name}</h5>
+                            
+                        </div>
+                        
+                </div>
+               
+            </div> 
             );
     })
     
-        );
+    return(
+        <div className="container">
+            <div className="row">
+                {menu}
+                <p>{this.renderDish(this.state.SelectedDish)}</p>
+            </div>
+        </div>
+
+
+    );   
 }
 }
 export default Menu;
